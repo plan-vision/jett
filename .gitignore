@@ -1,0 +1,27 @@
+.factorypath
+pom.generated.xml
+jar.generated.xml
+/updates/
+/winstaller/
+/jre/
+/.visionr/
+/classes/
+/installations/
+/target/
+/bin/
+/work/
+/node_modules/
+/src/js/bin/srvc/daemon/
+/apps/
+npm-debug.*
+/.idea/
+*.log
+.classpath
+.project
+.vscode
+.settings
+
+#vscode local settings ignore
+.vscode/settings.json
+/h2db/
+target
