@@ -13,9 +13,11 @@ import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlException;
 import org.apache.commons.jexl3.parser.ASTIdentifier;
+import org.apache.commons.jexl3.parser.ASTIdentifierAccess;
 import org.apache.commons.jexl3.parser.ASTMethodNode;
 import org.apache.commons.jexl3.parser.ASTNumberLiteral;
 import org.apache.commons.jexl3.parser.ASTReference;
+import org.apache.commons.jexl3.parser.JexlNode;
 import org.apache.commons.jexl3.parser.Node;
 import org.apache.commons.jexl3.parser.Parser;
 import org.apache.commons.jexl3.parser.SimpleNode;
@@ -140,22 +142,23 @@ public class Expression
         for (int i = 0; i < count; i++)
         {
             Node child = node.jjtGetChild(i);
-            if (child instanceof ASTIdentifier)
+            if (child instanceof ASTIdentifier || child instanceof ASTIdentifierAccess)
             {
-                ASTIdentifier identifier = (ASTIdentifier) child;
+            	JexlNode identifier = (JexlNode) child;
+            	String name = identifier instanceof ASTIdentifier ? ((ASTIdentifier)child).getName() : ((ASTIdentifierAccess)child).getName();  
 
                 if (collectionName == null)
-                    collectionName = identifier.getName();
+                    collectionName = name;
                 else
-                    collectionName = collectionName + "." + identifier.getName();
+                    collectionName = collectionName + "." + name;
                 logger.debug("    fCN: Test Expr ({}/{}): \"{}\".",
                         i, count, collectionName);
 
                 // Turn off implicit collection processing on a per-collection name
                 // basis.
-                if (noImplProcCollNames.contains(identifier.getName()))
+                if (noImplProcCollNames.contains(name))
                 {
-                    logger.trace("    fCN: Skipping because {} has been turned off.", identifier.getName());
+                    logger.trace("    fCN: Skipping because {} has been turned off.", name);
                     continue;
                 }
 
@@ -192,29 +195,33 @@ public class Expression
                                     {
                                         ASTIdentifier childIdentifier = (ASTIdentifier) methodChild;
                                         logger.debug("  child image = \"{}\".", childIdentifier.getName());
+                                    }else if (methodChild instanceof ASTIdentifierAccess) {
+                                    	ASTIdentifierAccess childIdentifier = (ASTIdentifierAccess) methodChild;
+                                        logger.debug("  child image = \"{}\".", childIdentifier.getName());
                                     }
                                 }
                             }
                             // First child should be the identifier (name) of the method.
-                            ASTIdentifier childIdentifier = (ASTIdentifier) methodNode.jjtGetChild(0);
-                            if (childIdentifier.getName() != null &&
-                                    (childIdentifier.getName().startsWith("capacity") ||
-                                            childIdentifier.getName().startsWith("contains") ||
-                                            childIdentifier.getName().startsWith("element") ||
-                                            childIdentifier.getName().startsWith("equals") ||
-                                            childIdentifier.getName().equals("get") ||  // Don't cover getter methods that may return Collections
-                                            childIdentifier.getName().startsWith("hashCode") ||
-                                            childIdentifier.getName().startsWith("indexOf") ||
-                                            childIdentifier.getName().startsWith("isEmpty") ||
-                                            childIdentifier.getName().startsWith("lastIndexOf") ||
-                                            childIdentifier.getName().startsWith("size") ||
-                                            childIdentifier.getName().startsWith("toString")
+                            JexlNode jv = methodNode.jjtGetChild(0);
+                            String chldname = jv instanceof ASTIdentifierAccess ? ((ASTIdentifierAccess)jv).getName() : ((ASTIdentifier)jv).getName();
+                            if (chldname != null &&
+                                    (chldname.startsWith("capacity") ||
+                                    		chldname.startsWith("contains") ||
+                                    		chldname.startsWith("element") ||
+                                    		chldname.startsWith("equals") ||
+                                    		chldname.equals("get") ||  // Don't cover getter methods that may return Collections
+                                    		chldname.startsWith("hashCode") ||
+                                    		chldname.startsWith("indexOf") ||
+                                    		chldname.startsWith("isEmpty") ||
+                                    		chldname.startsWith("lastIndexOf") ||
+                                    		chldname.startsWith("size") ||
+                                    		chldname.startsWith("toString")
                                     )
                                     )
                             {
                                 // Continue on to the next child (if any).
                                 logger.trace("      fCN: Skipping {} because of child method name {}",
-                                        collectionName, childIdentifier.getName());
+                                        collectionName, chldname);
                                 continue;
                             }
                         }
@@ -277,7 +284,7 @@ public class Expression
         if (cachedResult != null)
             return cachedResult;
         
-        Parser parser = new Parser(";");
+        Parser parser = new Parser(";"); // ";" ?
         try
         {
             SimpleNode tree = parser.parse(null,JexlEngine.DEFAULT_FEATURES,expression, null);

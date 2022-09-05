@@ -32,7 +32,7 @@ import net.sf.jett.transform.ExcelTransformer;
  * @author Randy Gettman
  * @since 0.7.0
  */
-public class MultipleNonConsecutiveTest extends TestCase
+public class MultipleNonConsecutiveTest extends TestCase 
 {
     /**
      * Overriding only to get the <code>Workbook</code> object and manipulate it
@@ -272,7 +272,7 @@ public class MultipleNonConsecutiveTest extends TestCase
         // "cloneSheet".  Test them by setting them in the template sheet.
         // The "checkSheet" method will check all resultant sheets to see if they
         // retain these settings.
-        assertEquals("org.apache.poi.ss.util.CellRangeAddress [A:A]", sheet.getRepeatingColumns().toString());
+        assertEquals("org.apache.poi.ss.util.CellRangeAddress [A0:A0]", sheet.getRepeatingColumns().toString());
         assertEquals("org.apache.poi.ss.util.CellRangeAddress [1:1]", sheet.getRepeatingRows().toString());
 
         assertEquals(2, ps.getCopies());

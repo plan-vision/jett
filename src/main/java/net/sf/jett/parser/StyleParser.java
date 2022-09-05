@@ -484,6 +484,9 @@ public class StyleParser
         // doesn't match, then nothing will break.
         if (PROPERTY_FONT_BOLDWEIGHT.equals(property))
         {
+        	if (value.equalsIgnoreCase("bold"))
+        		style.setFontBoldweight(true);
+        	else
             try
             {
                 style.setFontBoldweight(Boolean.valueOf(value));

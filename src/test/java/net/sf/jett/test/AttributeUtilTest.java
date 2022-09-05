@@ -182,7 +182,7 @@ public class AttributeUtilTest
      * Make sure that a bad expression with an undefined variable yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = org.apache.commons.jexl3.JexlException.Variable.class	)
     public void testBooleanDNE()
     {
         AttributeUtil.evaluateBoolean(myTag, new XSSFRichTextString("${dne}"), myBeans, true);
@@ -200,7 +200,7 @@ public class AttributeUtilTest
     /**
      * Proper exception must be thrown for unparseable integer.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateIntBad()
     {
         AttributeUtil.evaluateInt(myTag, new XSSFRichTextString("${t}"), myBeans, "attr_name", 0);
@@ -210,7 +210,7 @@ public class AttributeUtilTest
      * Make sure that a bad expression with an undefined variable yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = org.apache.commons.jexl3.JexlException.Variable.class)
     public void testEvaluateIntDNE()
     {
         AttributeUtil.evaluateInt(myTag, new XSSFRichTextString("${dne}"), myBeans, "attr_name", 0);
@@ -237,7 +237,7 @@ public class AttributeUtilTest
     /**
      * Throw negative number at int method testing for being non-negative.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateNonNegativeNegative()
     {
         AttributeUtil.evaluateNonNegativeInt(myTag, new XSSFRichTextString("${isquared}"), myBeans, "attr_name", 0);
@@ -255,7 +255,7 @@ public class AttributeUtilTest
     /**
      * Throw zero at int method testing for being positive.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluatePositiveIntZero()
     {
         AttributeUtil.evaluatePositiveInt(myTag, new XSSFRichTextString("${zero}"), myBeans, "attr_name", -1);
@@ -264,7 +264,7 @@ public class AttributeUtilTest
     /**
      * Throw negative number at int method testing for being positive.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluatePositiveIntNegative()
     {
         AttributeUtil.evaluatePositiveInt(myTag, new XSSFRichTextString("${isquared}"), myBeans, "attr_name", 0);
@@ -282,7 +282,7 @@ public class AttributeUtilTest
     /**
      * Throw zero at int method testing for being non-zero.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateNonZeroIntZero()
     {
         AttributeUtil.evaluateNonZeroInt(myTag, new XSSFRichTextString("${zero}"), myBeans, "attr_name", -1);
@@ -309,7 +309,7 @@ public class AttributeUtilTest
     /**
      * Proper exception must be thrown for unparseable double.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateDoubleBad()
     {
         AttributeUtil.evaluateDouble(myTag, new XSSFRichTextString("${t}"), myBeans, "attr_name", 0);
@@ -319,7 +319,7 @@ public class AttributeUtilTest
      * Make sure that a bad expression with an undefined variable yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = org.apache.commons.jexl3.JexlException.Variable.class)
     public void testEvaluateDoubleDNE()
     {
         AttributeUtil.evaluateDouble(myTag, new XSSFRichTextString("${dne}"), myBeans, "attr_name", 0);
@@ -331,7 +331,7 @@ public class AttributeUtilTest
      *
      * @since 0.11.0
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluatePositiveDoubleNegative()
     {
         AttributeUtil.evaluatePositiveDouble(myTag, new XSSFRichTextString("${-question}"), myBeans, "attr_name", 1);
@@ -343,7 +343,7 @@ public class AttributeUtilTest
      *
      * @since 0.11.0
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluatePositiveDoubleZero()
     {
         AttributeUtil.evaluatePositiveDouble(myTag, new XSSFRichTextString("${zero}"), myBeans, "attr_name", 1);
@@ -355,7 +355,7 @@ public class AttributeUtilTest
      *
      * @since 0.11.0
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateNonNegativeDoubleNegative()
     {
         AttributeUtil.evaluateNonNegativeDouble(myTag, new XSSFRichTextString("${-question}"), myBeans, "attr_name", 0);
@@ -378,7 +378,7 @@ public class AttributeUtilTest
     /**
      * Ensures that if a <code>null</code> is passed, the exception is thrown.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateRichTextStringNull()
     {
         AttributeUtil.evaluateRichTextStringNotNull(myTag, new XSSFRichTextString("${null}"),
@@ -403,17 +403,10 @@ public class AttributeUtilTest
         assertNull(AttributeUtil.evaluateString(myTag, new XSSFRichTextString("${null}"), myBeans, "notNullDefault"));
     }
 
-    // Can't have this test, because we have to have null be a valid possible result.
-    //@Test(expected = AttributeExpressionException.class)
-    //public void testEvaluateStringDNE()
-    //{
-    //   AttributeUtil.evaluateString(new XSSFRichTextString("${dne}"), myBeans, null);
-    //}
-
     /**
      * Catches the null result.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateStringNotNull()
     {
         AttributeUtil.evaluateStringNotNull(myTag, new XSSFRichTextString("${null}"), myBeans, "attr_name", "notNullDefault");
@@ -433,7 +426,7 @@ public class AttributeUtilTest
      * Tests that an exception results when a result is not contained in a set
      * of specific values.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateStringSpecificValuesNotFound()
     {
         AttributeUtil.evaluateStringSpecificValues(myTag, new XSSFRichTextString("${project}"), myBeans, "attr_name",
@@ -444,7 +437,7 @@ public class AttributeUtilTest
      * Make sure that a bad expression with an undefined variable yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = org.apache.commons.jexl3.JexlException.Variable.class)
     public void testEvaluateObjectDNE()
     {
         AttributeUtil.evaluateObject(myTag, "${dne}", myBeans, "attr_name", String.class, "notNullDefault");
@@ -464,7 +457,7 @@ public class AttributeUtilTest
     /**
      * Test whether we can detect the wrong class.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateObjectWrongClass()
     {
         AttributeUtil.evaluateObject(myTag, "${bugs}", myBeans, "attr_name", Division.class, null);
@@ -484,7 +477,7 @@ public class AttributeUtilTest
     /**
      * Test whether we can detect the wrongly instantiated class.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateObjectInstantiateWrongClass()
     {
         AttributeUtil.evaluateObject(myTag, "net.sf.jett.test.model.Employee", myBeans, "attr_name", Division.class, null);
@@ -494,7 +487,7 @@ public class AttributeUtilTest
      * Make sure that a bad expression with an undefined variable yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = org.apache.commons.jexl3.JexlException.Variable.class)
     public void testEvaluateListDNE()
     {
         AttributeUtil.evaluateList(myTag, new XSSFRichTextString("${dne}"), myBeans, null);
@@ -536,7 +529,7 @@ public class AttributeUtilTest
      * Make sure that a bad expression with an undefined variable yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = org.apache.commons.jexl3.JexlException.Variable.class)
     public void testEvaluateIntegerArrayDNE()
     {
         AttributeUtil.evaluateIntegerArray(myTag, new XSSFRichTextString("${dne}"), myBeans, Arrays.asList(1));
@@ -594,7 +587,7 @@ public class AttributeUtilTest
      * Make sure that a bad expression with an undefined variable yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = org.apache.commons.jexl3.JexlException.Variable.class)
     public void testEvaluateIntegerArrayArrayDNE()
     {
         List<List<Integer>> def = new ArrayList<>();
@@ -698,7 +691,7 @@ public class AttributeUtilTest
      * Make sure that a variable name starting with a number yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateStringVarNameStartNumber()
     {
         AttributeUtil.evaluateStringVarName(myTag, new XSSFRichTextString("1a"), myBeans, null);
@@ -708,7 +701,7 @@ public class AttributeUtilTest
      * Make sure that a variable name with punctuation yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateStringVarNamePunctInName()
     {
         AttributeUtil.evaluateStringVarName(myTag, new XSSFRichTextString("abc-def"), myBeans, null);
@@ -718,7 +711,7 @@ public class AttributeUtilTest
      * Make sure that a variable name that is a JEXL reserved word yields an
      * <code>AttributeExpressionException</code>.
      */
-    @Test(expected = AttributeExpressionException.class)
+    @Test(expected = net.sf.jett.exception.AttributeExpressionException.class)
     public void testEvaluateStringVarNameReservedWord()
     {
         AttributeUtil.evaluateStringVarName(myTag, new XSSFRichTextString("var"), myBeans, null);
