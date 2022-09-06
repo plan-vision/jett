@@ -127,7 +127,7 @@ public class RichTextStringUtil
 
         int numFormattingRuns = richTextString.numFormattingRuns();
         String value = richTextString.getString();
-        logger.trace("replaceAll: \"{}\" ({}): numFormattingRuns={}, replacing \"{}\" with \"{}\".",
+        if (logger.isTraceEnabled()) logger.trace("replaceAll: \"{}\" ({}): numFormattingRuns={}, replacing \"{}\" with \"{}\".",
                 value, value.length(), numFormattingRuns, target, replacement);
 
         List<FormattingRun> formattingRuns = determineFormattingRunStats(richTextString);
@@ -139,7 +139,7 @@ public class RichTextStringUtil
 
         while (beginIdx != -1)
         {
-            logger.trace("    beginIdx={}", beginIdx);
+            if (logger.isTraceEnabled()) logger.trace("    beginIdx={}", beginIdx);
 
             // Identifier Mode: If there is a "Java Identifier Part" just before
             // or just after the target, then don't replace it, because we've
@@ -202,7 +202,7 @@ public class RichTextStringUtil
 
         int numFormattingRuns = richTextString.numFormattingRuns();
         String value = richTextString.getString();
-        logger.trace("replaceValues: \"{}\" ({}): numFormattingRuns={}, replacements: {}",
+        if (logger.isTraceEnabled()) logger.trace("replaceValues: \"{}\" ({}): numFormattingRuns={}, replacements: {}",
                 value, value.length(), numFormattingRuns, targets.size());
 
         List<FormattingRun> formattingRuns = determineFormattingRunStats(richTextString);
@@ -331,7 +331,7 @@ public class RichTextStringUtil
     {
         int numFormattingRuns = richTextString.numFormattingRuns();
         String value = richTextString.getString();
-        logger.trace("substring: \"{}\" ({}): numFormattingRuns={}, beginIndex: {}, endIndex: {}",
+        if (logger.isTraceEnabled()) logger.trace("substring: \"{}\" ({}): numFormattingRuns={}, beginIndex: {}, endIndex: {}",
                 value, value.length(), numFormattingRuns, beginIndex, endIndex);
 
         List<FormattingRun> formattingRuns = determineFormattingRunStats(richTextString);
@@ -390,14 +390,14 @@ public class RichTextStringUtil
                 for (int j = begin; j < richTextString.length(); j++)
                 {
                     short currFontIndex = (Short) getFontAtIndex(hssfRichTextString, j);
-                    logger.trace("    Comparing j={}, currFont={}, font={}", j, currFontIndex, fontIndex);
+                    if (logger.isTraceEnabled()) logger.trace("    Comparing j={}, currFont={}, font={}", j, currFontIndex, fontIndex);
                     if (currFontIndex == fontIndex)
                         length++;
                     else
                         break;
                 }
 
-                logger.trace("  dFRS: HSSF Formatting run found: ({}) begin={}, length={}, font={}",
+                if (logger.isTraceEnabled()) logger.trace("  dFRS: HSSF Formatting run found: ({}) begin={}, length={}, font={}",
                         fmtIdx, begin, length, fontIndex);
                 formattingRuns.add(new FormattingRun(begin, length, fontIndex));
             }
@@ -409,8 +409,8 @@ public class RichTextStringUtil
             for (int fmtIdx = 0; fmtIdx < numFormattingRuns; fmtIdx++)
             {
                 int begin = richTextString.getIndexOfFormattingRun(fmtIdx);
-                logger.trace("  fmtIdx: {}", fmtIdx);
-                logger.trace("    begin: {}", begin);
+                if (logger.isTraceEnabled()) logger.trace("  fmtIdx: {}", fmtIdx);
+                if (logger.isTraceEnabled()) logger.trace("    begin: {}", begin);
                 XSSFFont fontIndex = (XSSFFont) getFontOfFormattingRun(xssfRichTextString, fmtIdx);
 
                 // Determine font formatting run length.
@@ -418,7 +418,7 @@ public class RichTextStringUtil
                 for (int j = begin; j < richTextString.length(); j++)
                 {
                     XSSFFont currFontIndex = (XSSFFont) getFontAtIndex(xssfRichTextString, j);
-                    logger.trace("    Comparing j={}, currFont={}, font={}",
+                    if (logger.isTraceEnabled()) logger.trace("    Comparing j={}, currFont={}, font={}",
                             j, ((currFontIndex != null) ? currFontIndex.toString() : "(null)"), fontIndex);
                     if ((currFontIndex == null && fontIndex == null) ||
                             (currFontIndex != null && currFontIndex.equals(fontIndex)))
@@ -427,7 +427,7 @@ public class RichTextStringUtil
                         break;
                 }
 
-                logger.trace("  dFRS: XSSF Formatting run found: ({}) begin={}, length={}, font={}",
+                if (logger.isTraceEnabled()) logger.trace("  dFRS: XSSF Formatting run found: ({}) begin={}, length={}, font={}",
                         fmtIdx, begin, length, fontIndex);
                 formattingRuns.add(new FormattingRun(begin, length, fontIndex));
             }
@@ -474,7 +474,7 @@ public class RichTextStringUtil
             int begin = run.getBegin();
             int end = begin + run.getLength();
             Object font = run.getFont();
-            logger.trace("  formatString: Applying format ({}): begin={}, length={}, font={} to string \"{}\".",
+            if (logger.isTraceEnabled()) logger.trace("  formatString: Applying format ({}): begin={}, length={}, font={} to string \"{}\".",
                     i, begin, run.getLength(), font, string.getString());
             if (string instanceof HSSFRichTextString)
                 string.applyFont(begin, end, (Short) font);
@@ -580,7 +580,7 @@ public class RichTextStringUtil
     public static void applyFont(RichTextString richTextString, Cell cell,
                                  CellStyleCache cellStyleCache, FontCache fontCache)
     {
-        logger.trace("applyFont: richTextString = {}, sheet {}, cell at row {}, col {}",
+        if (logger.isTraceEnabled()) logger.trace("applyFont: richTextString = {}, sheet {}, cell at row {}, col {}",
                 richTextString, cell.getSheet().getSheetName(), cell.getRowIndex(), cell.getColumnIndex());
         Font font;
         short fontIdx;
@@ -615,7 +615,7 @@ public class RichTextStringUtil
         }
         if (font != null)
         {
-            logger.trace("  Font is {}, index {}", font.toString(), font.getIndex());
+            if (logger.isTraceEnabled()) logger.trace("  Font is {}, index {}", font.toString(), font.getIndex());
             CellStyle cellStyle = cell.getCellStyle();
             Workbook workbook = cell.getSheet().getWorkbook();
             CellStyle newCellStyle = cellStyleCache.findCellStyleWithFont(cellStyle, font);
@@ -658,7 +658,7 @@ public class RichTextStringUtil
     {
         int numFormattingRuns = richTextString.numFormattingRuns();
         String value = richTextString.getString();
-        logger.trace("performEscaping: \"{}\" ({}): numFormattingRuns={}",
+        if (logger.isTraceEnabled()) logger.trace("performEscaping: \"{}\" ({}): numFormattingRuns={}",
                 value, value.length(), numFormattingRuns);
 
         List<FormattingRun> formattingRuns = determineFormattingRunStats(richTextString);

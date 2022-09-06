@@ -299,7 +299,7 @@ public class CollectionsTransformer
         List<String> varNames = new ArrayList<>(collectionNames.size());
         for (String collectionName : collectionNames)
         {
-            logger.trace("  collection name found: {}", collectionName);
+            if (logger.isTraceEnabled()) logger.trace("  collection name found: {}", collectionName);
             // Create name under which the items for this Collection will be known.
             String varName = collectionName.replaceAll("\\.", "_");
             varName += IMPL_ITEM_NAME_SUFFIX;
@@ -370,7 +370,7 @@ public class CollectionsTransformer
         int left = block.getLeftColNum();
         int right = block.getRightColNum();
         int bottom = block.getBottomRowNum();
-        logger.trace("fCIB: Finding Collections in Block: {}, starting tag found at row {}, cell {}",
+        if (logger.isTraceEnabled()) logger.trace("fCIB: Finding Collections in Block: {}, starting tag found at row {}, cell {}",
                 block, startRowIndex, startColumnIndex);
         List<String> collectionNames = new ArrayList<>();
 
@@ -388,7 +388,7 @@ public class CollectionsTransformer
         int endCellNum = right;
         for (int cellNum = startCellNum; cellNum <= endCellNum; cellNum++)
         {
-            logger.trace("  Trying same row: row {}, col {}", startRowIndex, cellNum);
+            if (logger.isTraceEnabled()) logger.trace("  Trying same row: row {}, col {}", startRowIndex, cellNum);
             // First, check remaining Cells in the same row.
             Cell cell = startRow.getCell(cellNum);
             if (cell != null && cell.getCellType() == CellType.STRING)

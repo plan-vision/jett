@@ -375,7 +375,7 @@ public class StyleTag extends BaseTag
                 //end = System.nanoTime();
                 //System.err.println("Create Font: " + (end - start) + " ns");
                 fCache.cacheFont(foundFont);
-                logger.trace("  Font created.");
+                if (logger.isTraceEnabled()) logger.trace("  Font created.");
             }
 
             // Create the new CellStyle.
@@ -389,7 +389,7 @@ public class StyleTag extends BaseTag
             //System.err.println("Create CS: " + (end - start) + " ns");
 
             csCache.cacheCellStyle(foundStyle);
-            logger.trace("  Created new style.");
+            if (logger.isTraceEnabled()) logger.trace("  Created new style.");
         }
 
         cell.setCellStyle(foundStyle);

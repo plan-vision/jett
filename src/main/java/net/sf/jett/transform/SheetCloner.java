@@ -152,7 +152,7 @@ public class SheetCloner
             if (logger.isTraceEnabled())
             {
                 for (int j = 0; j < myWorkbook.getNumberOfSheets(); j++)
-                    logger.trace("  Before: Sheet({}): \"{}\".",
+                    if (logger.isTraceEnabled()) logger.trace("  Before: Sheet({}): \"{}\".",
                             j, myWorkbook.getSheetAt(j).getSheetName());
             }
 
@@ -211,7 +211,7 @@ public class SheetCloner
             if (logger.isTraceEnabled())
             {
                 for (int j = 0; j < myWorkbook.getNumberOfSheets(); j++)
-                    logger.trace("  After: Sheet({}): \"{}\".",
+                    if (logger.isTraceEnabled()) logger.trace("  After: Sheet({}): \"{}\".",
                             j, myWorkbook.getSheetAt(j).getSheetName());
             }
         }

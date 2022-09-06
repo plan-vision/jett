@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlException;
+import org.apache.commons.jexl3.parser.ASTArrayAccess;
 import org.apache.commons.jexl3.parser.ASTIdentifier;
 import org.apache.commons.jexl3.parser.ASTIdentifierAccess;
 import org.apache.commons.jexl3.parser.ASTMethodNode;
@@ -158,7 +159,7 @@ public class Expression
                 // basis.
                 if (noImplProcCollNames.contains(name))
                 {
-                    logger.trace("    fCN: Skipping because {} has been turned off.", name);
+                	if (logger.isTraceEnabled()) logger.trace("    fCN: Skipping because {} has been turned off.", name);
                     continue;
                 }
 
@@ -220,7 +221,7 @@ public class Expression
                                     )
                             {
                                 // Continue on to the next child (if any).
-                                logger.trace("      fCN: Skipping {} because of child method name {}",
+                            	if (logger.isTraceEnabled()) logger.trace("      fCN: Skipping {} because of child method name {}",
                                         collectionName, chldname);
                                 continue;
                             }
@@ -230,16 +231,20 @@ public class Expression
                             // Apparently, "ASTSizeMethod" is a special case for
                             // ".size()", but "ASTSizeMethod" is NOT a
                             // "ASTMethodNode", so this check is needed!
-                            logger.trace("      fCN: sizeMethod.image = {}",
+                            if (logger.isTraceEnabled()) logger.trace("      fCN: sizeMethod.image = {}",
                                     ((ASTSizeMethod) nextChild).image);
                             continue;
                         }
                         else */if (nextChild instanceof ASTNumberLiteral)
                         {
                             // JEXL allows ".n" to access an element of a List.
-                            logger.trace("      fCN: numberLiteral.image = {}",
+                            if (logger.isTraceEnabled()) logger.trace("      fCN: numberLiteral.image = {}",
                                     ((ASTNumberLiteral) nextChild).toString());
                             continue;
+                        } else if (nextChild instanceof ASTArrayAccess && nextChild.jjtGetNumChildren() == 1 && nextChild.jjtGetChild(0) instanceof ASTNumberLiteral) {
+                        	// jexl3 only ? 
+                        	if (logger.isTraceEnabled()) logger.trace("      fCN: ARR numberLiteral.image = {}",((ASTNumberLiteral) nextChild).toString());
+                        	continue;
                         }
                         else
                         {
@@ -250,7 +255,7 @@ public class Expression
                     {
                         // No additional children.  The Expression simply evaluates
                         // to a Collection.
-                        logger.trace("      fCN: Just a collection: \"{}\".", collectionName);
+                    	if (logger.isTraceEnabled()) logger.trace("      fCN: Just a collection: \"{}\".", collectionName);
                         return null;
                     }
 
@@ -291,7 +296,7 @@ public class Expression
             List<ASTReference> references = findReferences(tree);
             for (ASTReference node : references)
             {
-                logger.trace("  Reference...");
+            	if (logger.isTraceEnabled()) logger.trace("  Reference...");
                 String collectionName = findCollectionName(node, beans, context);
                 if (collectionName != null)
                 {
@@ -345,7 +350,7 @@ public class Expression
     {
         ExpressionFactory factory = context.getExpressionFactory();
 
-        logger.trace("getImplicitCollectionExpr: \"{}\".", value);
+        if (logger.isTraceEnabled()) logger.trace("getImplicitCollectionExpr: \"{}\".", value);
         List<Expression> expressions = getExpressions(value);
         List<String> implicitCollections = new ArrayList<>();
 
@@ -377,10 +382,10 @@ public class Expression
 
         if (logger.isTraceEnabled())
         {
-            logger.trace("  gICE implicitCollections.size() = {}", implicitCollections.size());
+        	if (logger.isTraceEnabled()) logger.trace("  gICE implicitCollections.size() = {}", implicitCollections.size());
             for (String implColl : implicitCollections)
             {
-                logger.trace("  gICE implColl item: {}", implColl);
+            	if (logger.isTraceEnabled()) logger.trace("  gICE implColl item: {}", implColl);
             }
         }
 
@@ -592,7 +597,7 @@ public class Expression
      */
     private static int findEndOfExpression(String value, int startIdx)
     {
-        logger.trace("    fEOE: \"{}\", startIdx: {}", value, startIdx);
+    	if (logger.isTraceEnabled()) logger.trace("    fEOE: \"{}\", startIdx: {}", value, startIdx);
         int begins = 1;
         int ends = 0;
         for (int i = startIdx; i < value.length(); i++)

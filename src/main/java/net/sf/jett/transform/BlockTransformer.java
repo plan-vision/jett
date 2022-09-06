@@ -52,7 +52,7 @@ public class BlockTransformer
         Map<String, Cell> processedCells = context.getProcessedCellsMap();
         CellTransformer transformer = new CellTransformer();
 
-        logger.trace("Transforming block: {}", block);
+        if (logger.isTraceEnabled()) logger.trace("Transforming block: {}", block);
 
         for (int rowNum = block.getTopRowNum(); rowNum <= block.getBottomRowNum(); rowNum++)
         {
@@ -96,7 +96,7 @@ public class BlockTransformer
             }
         }
 
-        logger.trace("End: {}", block);
+        if (logger.isTraceEnabled()) logger.trace("End: {}", block);
     }
 }
 

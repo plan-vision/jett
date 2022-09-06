@@ -122,7 +122,7 @@ public class CellTransformer
             if (parser.isTag() && !parser.isEndTag())
             {
                 // Transform the Tag.
-                logger.trace("Transforming tag cell tag.");
+                if (logger.isTraceEnabled()) logger.trace("Transforming tag cell tag.");
                 cellProcessed = transformCellTag(cell, workbookContext, cellContext, parser);
             }
             else
@@ -133,7 +133,7 @@ public class CellTransformer
                         beans, workbookContext);
                 if (!collExprs.isEmpty())
                 {
-                    logger.trace("  Transforming implicit collection(s).");
+                    if (logger.isTraceEnabled()) logger.trace("  Transforming implicit collection(s).");
                     CollectionsTransformer collTransformer = new CollectionsTransformer();
                     collTransformer.transform(cell, workbookContext, cellContext);
                     // The implicit collection processing has already processed this Cell.
@@ -142,7 +142,7 @@ public class CellTransformer
                 else
                 {
                     // Evaluate.
-                    logger.trace("  Transforming string cell.");
+                    if (logger.isTraceEnabled()) logger.trace("  Transforming string cell.");
                     CreationHelper helper = sheet.getWorkbook().getCreationHelper();
                     Object result = Expression.evaluateString(richString, helper, workbookContext.getExpressionFactory(), beans);
                     newValue = SheetUtil.setCellValue(workbookContext, cell, result, richString);
@@ -359,7 +359,7 @@ public class CellTransformer
             {
                 for (int cellNum = startColumnIndex; cellNum <= right; cellNum++)
                 {
-                    tagLogger.trace("  Trying cell: row {}, col {}", rowNum, cellNum);
+                    if (logger.isTraceEnabled()) logger.trace("  Trying cell: row {}, col {}", rowNum, cellNum);
                     Cell candidate = row.getCell(cellNum);
                     if (candidate != null && isMatchingEndTag(context, candidate, namespaceAndTagName, innerTags))
                         return candidate;
@@ -418,7 +418,7 @@ public class CellTransformer
                         throw new TagParseException("End tag found \"" + candidateParser.getNamespaceAndTagName() +
                                 "\" does not match start tag \"" + namespaceAndTagName + "\"" + SheetUtil.getCellLocation(candidate) + ".");
                     }
-                    tagLogger.trace("    Adding end tag to list: {}", candidateParser.getNamespaceAndTagName());
+                    if (logger.isTraceEnabled()) logger.trace("    Adding end tag to list: {}", candidateParser.getNamespaceAndTagName());
                     innerTags.add(candidateParser);
                 }
             }
@@ -429,7 +429,7 @@ public class CellTransformer
                 // can match the original start tag.  Push it onto the "stack".
                 if (!candidateParser.isBodiless())
                 {
-                    tagLogger.trace("    Adding start tag to list: {}", candidateParser.getNamespaceAndTagName());
+                    if (logger.isTraceEnabled()) logger.trace("    Adding start tag to list: {}", candidateParser.getNamespaceAndTagName());
                     innerTags.add(candidateParser);
                 }
             }
@@ -437,7 +437,7 @@ public class CellTransformer
             afterTagIdx += candidateParser.getAfterTagIdx();
             candidateParser = new TagParser(candidate, afterTagIdx);
             candidateParser.parse();
-            tagLogger.trace("    afterTagIdx is now {}, parser's tag text is \"{}\".",
+            if (logger.isTraceEnabled()) logger.trace("    afterTagIdx is now {}, parser's tag text is \"{}\".",
                     afterTagIdx, candidateParser.getTagText());
         }
         // If we got here, then we did not match.
@@ -460,36 +460,36 @@ public class CellTransformer
     private boolean doAllInnerTagsMatch(List<TagParser> innerTags, int rightMostCol)
     {
         Stack<TagParser> tagsToMatch = new Stack<>();
-        tagLogger.trace("    dAITM:");
+        if (logger.isTraceEnabled()) logger.trace("    dAITM:");
         for (TagParser parser : innerTags)
         {
             Cell candidateCell = parser.getCell();
             if (candidateCell.getColumnIndex() <= rightMostCol)
             {
-                tagLogger.trace("      dAITM: Considering tag: {} at row {}, col {}",
+                if (logger.isTraceEnabled()) logger.trace("      dAITM: Considering tag: {} at row {}, col {}",
                         parser.getNamespaceAndTagName(), parser.getCell().getRowIndex(), parser.getCell().getColumnIndex());
                 if (parser.isEndTag())
                 {
                     // Unmatched end tag.
                     if (tagsToMatch.isEmpty())
                     {
-                        tagLogger.trace("      dAITM: Unmatched end tag.");
+                        if (logger.isTraceEnabled()) logger.trace("      dAITM: Unmatched end tag.");
                         return false;
                     }
 
                     String namespaceAndTagName = parser.getNamespaceAndTagName();
                     TagParser startParser = tagsToMatch.peek();
-                    tagLogger.trace("      dAITM: Comparing start: {} to end: {}",
+                    if (logger.isTraceEnabled()) logger.trace("      dAITM: Comparing start: {} to end: {}",
                             startParser.getNamespaceAndTagName(), namespaceAndTagName);
                     if (namespaceAndTagName.equals(startParser.getNamespaceAndTagName()))
                     {
-                        tagLogger.trace("      dAITM: Popped {}", startParser.getNamespaceAndTagName());
+                        if (logger.isTraceEnabled()) logger.trace("      dAITM: Popped {}", startParser.getNamespaceAndTagName());
                         tagsToMatch.pop();
                     }
                 }
                 else if (!parser.isBodiless())
                 {
-                    tagLogger.trace("      dAITM: Pushed {}", parser.getNamespaceAndTagName());
+                    if (logger.isTraceEnabled()) logger.trace("      dAITM: Pushed {}", parser.getNamespaceAndTagName());
                     tagsToMatch.push(parser);
                 }
             }

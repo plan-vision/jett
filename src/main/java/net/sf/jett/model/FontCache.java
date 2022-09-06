@@ -52,12 +52,12 @@ public class FontCache
     private void cachePreExistingFonts()
     {
         int numFonts = myWorkbook.getNumberOfFonts();
-        logger.trace("Caching {} pre-existing cell fonts.", numFonts);
+        if (logger.isTraceEnabled()) logger.trace("Caching {} pre-existing cell fonts.", numFonts);
         for (short i = 0; i < numFonts; i++)
         {
             cacheFont(myWorkbook.getFontAt(i));
         }
-        logger.trace("Done caching pre-existing fonts.");
+        if (logger.isTraceEnabled()) logger.trace("Done caching pre-existing fonts.");
     }
 
     /**
@@ -94,9 +94,9 @@ public class FontCache
         if (logger.isTraceEnabled())
         {
             if (f != null)
-                logger.trace("FCache hit   : {}", representation);
+                if (logger.isTraceEnabled()) logger.trace("FCache hit   : {}", representation);
             else
-                logger.trace("FCache miss! : {}", representation);
+                if (logger.isTraceEnabled()) logger.trace("FCache miss! : {}", representation);
         }
         return f;
     }
@@ -108,7 +108,7 @@ public class FontCache
     public void cacheFont(Font f)
     {
         String representation = getRepresentation(f);
-        logger.trace("Caching  f   : {}", representation);
+        if (logger.isTraceEnabled()) logger.trace("Caching  f   : {}", representation);
         myFontMap.put(representation, f);
     }
 

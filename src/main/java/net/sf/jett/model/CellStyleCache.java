@@ -60,12 +60,12 @@ public class CellStyleCache
     private void cachePreExistingCellStyles()
     {
         int numCellStyles = myWorkbook.getNumCellStyles();
-        logger.trace("Caching {} pre-existing cell styles.", numCellStyles);
+        if (logger.isTraceEnabled()) logger.trace("Caching {} pre-existing cell styles.", numCellStyles);
         for (int i = 0; i < numCellStyles; i++)
         {
             cacheCellStyle(myWorkbook.getCellStyleAt(i));
         }
-        logger.trace("Done caching pre-existing styles.");
+        if (logger.isTraceEnabled()) logger.trace("Done caching pre-existing styles.");
     }
 
     /**
@@ -130,9 +130,9 @@ public class CellStyleCache
         if (logger.isTraceEnabled())
         {
             if (cs != null)
-                logger.trace("CSCache hit  : {}", representation);
+                if (logger.isTraceEnabled()) logger.trace("CSCache hit  : {}", representation);
             else
-                logger.trace("CSCache miss!: {}", representation);
+                if (logger.isTraceEnabled()) logger.trace("CSCache miss!: {}", representation);
         }
         return cs;
     }
@@ -145,7 +145,7 @@ public class CellStyleCache
     public void cacheCellStyle(CellStyle cs)
     {
         String representation = getRepresentation(cs);
-        logger.trace("Caching cs   : {}", representation);
+        if (logger.isTraceEnabled()) logger.trace("Caching cs   : {}", representation);
         myCellStyleMap.put(representation, cs);
     }
 

@@ -3,6 +3,7 @@ package net.sf.jett.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -58,7 +59,7 @@ public class FormulaUtil
      */
     public static Map<String, List<CellRef>> createCellRefMap(Map<String, Formula> formulaMap)
     {
-        logger.trace("cCRM");
+        if (logger.isTraceEnabled()) logger.trace("cCRM");
         Map<String, List<CellRef>> cellRefMap = new HashMap<>();
         for (String key : formulaMap.keySet())
         {
@@ -403,7 +404,7 @@ public class FormulaUtil
         Map<String, List<CellRef>> cellRefMap = context.getCellRefMap();
         List<String> templateSheetNamesList = context.getTemplateSheetNames();
         List<String> newSheetNamesList = context.getSheetNames();
-        logger.trace("uSNRAC...");
+        if (logger.isTraceEnabled()) logger.trace("uSNRAC...");
         for (String key : cellRefMap.keySet())
         {
             logger.debug("key: \"{}\".", key);
@@ -486,7 +487,7 @@ public class FormulaUtil
     public static void addSheetNameRefsAfterClone(WorkbookContext context, String origSheetName,
                                                   String newSheetName, int clonePos)
     {
-        logger.trace("aSNRAC(context, {}, {}, {})", origSheetName, newSheetName, clonePos);
+        if (logger.isTraceEnabled()) logger.trace("aSNRAC(context, {}, {}, {})", origSheetName, newSheetName, clonePos);
 
         // Insert into the template and new sheet name lists (local copies,
         // doesn't affect the original list passed in to ExcelTransformer.transform).
@@ -543,7 +544,7 @@ public class FormulaUtil
             }
             else
             {
-                List<CellRef> addToCellRefs = new ArrayList<>();
+                LinkedList<CellRef> addToCellRefs = new LinkedList();
                 for (int i = 0; i < cellRefs.size(); i++)
                 {
                     CellRef cellRef = cellRefs.get(i);
@@ -553,7 +554,8 @@ public class FormulaUtil
                         CellRef newCellRef = new CellRef(newSheetName, cellRef.getRow(), cellRef.getCol(),
                                 cellRef.isRowAbsolute(), cellRef.isColAbsolute());
                         logger.debug("aSNRAC: adding cell ref {} to list keyed by {}", newCellRef, key);
-                        addToCellRefs.add(i, newCellRef);
+                        //addToCellRefs.add(i, newCellRef);
+                        addToCellRefs.add(newCellRef);
                     }
                 }
                 cellRefs.addAll(addToCellRefs);
@@ -756,7 +758,7 @@ public class FormulaUtil
                                                   int left, int right, int top, int bottom, int numCols, int numRows,
                                                   boolean remove, boolean add)
     {
-        logger.trace("    sCRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}, remove {}, add {}",
+        if (logger.isTraceEnabled()) logger.trace("    sCRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}, remove {}, add {}",
                 left, right, top, bottom, numCols, numRows, remove, add);
         Map<String, List<CellRef>> cellRefMap = context.getCellRefMap();
         List<String> templateSheetNames = context.getTemplateSheetNames();
@@ -845,7 +847,7 @@ public class FormulaUtil
     public static void copyCellReferencesInRange(String sheetName, WorkbookContext context,
                                                  int left, int right, int top, int bottom, int numCols, int numRows, String currSuffix, String newSuffix)
     {
-        logger.trace("    cCRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}, currSuffix: \"{}\", newSuffix: \"{}\"",
+        if (logger.isTraceEnabled()) logger.trace("    cCRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}, currSuffix: \"{}\", newSuffix: \"{}\"",
                 left, right, top, bottom, numCols, numRows, currSuffix, newSuffix);
         Map<String, List<CellRef>> cellRefMap = context.getCellRefMap();
         Map<String, List<CellRef>> newCellRefEntries = new HashMap<>();

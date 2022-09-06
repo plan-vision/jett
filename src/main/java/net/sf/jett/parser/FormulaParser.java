@@ -207,29 +207,29 @@ public class FormulaParser
      */
     private boolean addCellReferenceIfFound()
     {
-        logger.trace("  aCRIF: Trying to match \"{}\".", myCellReference);
+        if (logger.isTraceEnabled()) logger.trace("  aCRIF: Trying to match \"{}\".", myCellReference);
         if (myCellReference != null)
         {
             if (CELL_REF_PATTERN.matcher(myCellReference).matches())
             {
                 CellRef ref;
 
-                logger.trace("    aCRIF: Cell Reference is \"{}\".", myCellReference);
+                if (logger.isTraceEnabled()) logger.trace("    aCRIF: Cell Reference is \"{}\".", myCellReference);
                 if (mySheetName != null)
                     ref = new CellRef(mySheetName + "!" + myCellReference);
                 else
                     ref = new CellRef(myCellReference);
                 if (myDefaultValue != null)
                 {
-                    logger.trace("    aCRIF: Default value found is \"{}\".", myDefaultValue);
+                    if (logger.isTraceEnabled()) logger.trace("    aCRIF: Default value found is \"{}\".", myDefaultValue);
                     ref.setDefaultValue(myDefaultValue);
                 }
 
-                logger.trace("    aCRIF: Cell Reference detected: {}", ref.formatAsString());
+                if (logger.isTraceEnabled()) logger.trace("    aCRIF: Cell Reference detected: {}", ref.formatAsString());
                 // Don't add duplicates.
                 if (!myCellReferences.contains(ref))
                 {
-                    logger.trace("      aCRIF: Not in list, adding ref: row={}, col={}, rowAbs={}, colAbs={}.",
+                    if (logger.isTraceEnabled()) logger.trace("      aCRIF: Not in list, adding ref: row={}, col={}, rowAbs={}, colAbs={}.",
                             ref.getRow(), ref.getCol(), ref.isRowAbsolute(), ref.isColAbsolute());
                     myCellReferences.add(ref);
                 }

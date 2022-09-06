@@ -83,7 +83,7 @@ public class SheetUtil
      */
     private static void copyColumnWidthsLeft(Sheet sheet, int colStart, int colEnd, int numCols)
     {
-        logger.trace("    cCWL: colStart = {}, colEnd = {}, numCols = {}", colStart, colEnd, numCols);
+        if (logger.isTraceEnabled()) logger.trace("    cCWL: colStart = {}, colEnd = {}, numCols = {}", colStart, colEnd, numCols);
         int newColNum;
         for (int colNum = colStart; colNum <= colEnd; colNum++)
         {
@@ -105,7 +105,7 @@ public class SheetUtil
      */
     private static void copyColumnWidthsRight(Sheet sheet, int colStart, int colEnd, int numCols)
     {
-        logger.trace("    cCWR: colStart = {}, colEnd = {}, numCols = {}", colStart, colEnd, numCols);
+        if (logger.isTraceEnabled()) logger.trace("    cCWR: colStart = {}, colEnd = {}, numCols = {}", colStart, colEnd, numCols);
         int newColNum;
         for (int colNum = colEnd; colNum >= colStart; colNum--)
         {
@@ -149,7 +149,7 @@ public class SheetUtil
      */
     private static void copyRowHeightsUp(Sheet sheet, int rowStart, int rowEnd, int numRows)
     {
-        logger.trace("    cRHU: rowStart = {}, rowEnd = {}, numRows = {}", rowStart, rowEnd, numRows);
+        if (logger.isTraceEnabled()) logger.trace("    cRHU: rowStart = {}, rowEnd = {}, numRows = {}", rowStart, rowEnd, numRows);
         int newRowNum;
         Row row, newRow;
         for (int rowNum = rowStart; rowNum <= rowEnd; rowNum++)
@@ -185,7 +185,7 @@ public class SheetUtil
      */
     private static void copyRowHeightsDown(Sheet sheet, int rowStart, int rowEnd, int numRows)
     {
-        logger.trace("    cRHD: rowStart = {}, rowEnd = {}, numRows = {}", rowStart, rowEnd, numRows);
+        if (logger.isTraceEnabled()) logger.trace("    cRHD: rowStart = {}, rowEnd = {}, numRows = {}", rowStart, rowEnd, numRows);
         int newRowNum;
         Row row, newRow;
         for (int rowNum = rowEnd; rowNum >= rowStart; rowNum--)
@@ -227,7 +227,7 @@ public class SheetUtil
     private static void shiftCellsLeft(Sheet sheet, TagContext context, WorkbookContext workbookContext,
                                        int colStart, int colEnd, int rowStart, int rowEnd, int numCols)
     {
-        logger.trace("    Shifting cells left in rows {} to {}, cells {} to {} by {} columns.",
+        if (logger.isTraceEnabled()) logger.trace("    Shifting cells left in rows {} to {}, cells {} to {} by {} columns.",
                     rowStart, rowEnd, colStart, colEnd, numCols);
         Row row;
         Cell cell, newCell;
@@ -293,7 +293,7 @@ public class SheetUtil
     private static void shiftCellsRight(Sheet sheet, TagContext context, WorkbookContext workbookContext,
                                         int colStart, int colEnd, int rowStart, int rowEnd, int numCols)
     {
-        logger.trace("    Shifting cells right in rows {} to {}, cells {} to {} by {} columns.",
+        if (logger.isTraceEnabled()) logger.trace("    Shifting cells right in rows {} to {}, cells {} to {} by {} columns.",
                 rowStart, rowEnd, colStart, colEnd, numCols);
         Row row;
         Cell cell, newCell;
@@ -359,7 +359,7 @@ public class SheetUtil
     private static void shiftCellsUp(Sheet sheet, TagContext context, WorkbookContext workbookContext,
                                      int colStart, int colEnd, int rowStart, int rowEnd, int numRows)
     {
-        logger.trace("    Shifting cells up in rows {} to {}, cells {} to {} by {} rows.",
+        if (logger.isTraceEnabled()) logger.trace("    Shifting cells up in rows {} to {}, cells {} to {} by {} rows.",
                 rowStart, rowEnd, colStart, colEnd, numRows);
         int newRowIndex;
         Row oldRow, newRow;
@@ -430,7 +430,7 @@ public class SheetUtil
     private static void shiftCellsDown(Sheet sheet, TagContext context, WorkbookContext workbookContext,
                                        int colStart, int colEnd, int rowStart, int rowEnd, int numRows)
     {
-        logger.trace("    Shifting cells down in rows {} to {}, cells {} to {} by {} rows.",
+        if (logger.isTraceEnabled()) logger.trace("    Shifting cells down in rows {} to {}, cells {} to {} by {} rows.",
                 rowStart, rowEnd, colStart, colEnd, numRows);
         int newRowIndex;
         Row oldRow, newRow;
@@ -505,7 +505,7 @@ public class SheetUtil
      */
     private static void copyCell(Cell oldCell, Cell newCell)
     {
-        logger.trace("      cC: oldCell({}) to newCell({})",
+        if (logger.isTraceEnabled()) logger.trace("      cC: oldCell({}) to newCell({})",
             oldCell.getAddress().formatAsString(), newCell.getAddress().formatAsString());
 
         newCell.setCellStyle(oldCell.getCellStyle());
@@ -777,7 +777,7 @@ public class SheetUtil
                                                   int left, int right, int top, int bottom, int numCols, int numRows,
                                                   boolean remove, boolean add)
     {
-        logger.trace("    sMRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}, remove {}, add {}",
+        if (logger.isTraceEnabled()) logger.trace("    sMRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}, remove {}, add {}",
                 left, right, top, bottom, numCols, numRows, remove, add);
         if (numCols == 0 && numRows == 0 && remove && add)
             return;
@@ -848,7 +848,7 @@ public class SheetUtil
 //   private static void removeConditionalFormattingRegionsInRange(Sheet sheet,
 //      int left, int right, int top, int bottom)
 //   {
-//      logger.trace("    rCFRIR: left {}, right {}, top {}, bottom {}",
+//      if (logger.isTraceEnabled()) logger.trace("    rCFRIR: left {}, right {}, top {}, bottom {}",
 //            left, right, top, bottom);
 //
 //      SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();
@@ -939,7 +939,7 @@ public class SheetUtil
 //   private static void shiftConditionalFormattingRegionsInRange(Sheet sheet,
 //      int left, int right, int top, int bottom, int numCols, int numRows)
 //   {
-//      logger.trace("    sCFRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}",
+//      if (logger.isTraceEnabled()) logger.trace("    sCFRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}",
 //            left, right, top, bottom, numCols, numRows);
 //      if (numCols == 0 && numRows == 0)
 //         return;
@@ -993,7 +993,7 @@ public class SheetUtil
 //   private static void copyConditionalFormattingRegionsInRange(Sheet sheet,
 //      int left, int right, int top, int bottom, int numCols, int numRows)
 //   {
-//      logger.trace("    cCFRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}",
+//      if (logger.isTraceEnabled()) logger.trace("    cCFRIR: left {}, right {}, top {}, bottom {}, numCols {}, numRows {}",
 //            left, right, top, bottom, numCols, numRows);
 //      if (numCols == 0 && numRows == 0)
 //         return;
@@ -1089,7 +1089,7 @@ public class SheetUtil
      */
     public static void deleteBlock(Sheet sheet, TagContext tagContext, Block block, WorkbookContext context)
     {
-        logger.trace("  deleteBlock: {}: {}.", sheet.getSheetName(), block);
+        if (logger.isTraceEnabled()) logger.trace("  deleteBlock: {}: {}.", sheet.getSheetName(), block);
         int left = block.getLeftColNum();
         int right = block.getRightColNum();
         int top = block.getTopRowNum();
@@ -1137,7 +1137,7 @@ public class SheetUtil
      */
     public static void clearBlock(Sheet sheet, Block block, WorkbookContext context)
     {
-        logger.trace("  clearBlock: {}: {}.", sheet.getSheetName(), block);
+        if (logger.isTraceEnabled()) logger.trace("  clearBlock: {}: {}.", sheet.getSheetName(), block);
         int left = block.getLeftColNum();
         int right = block.getRightColNum();
         int top = block.getTopRowNum();
@@ -1239,7 +1239,7 @@ public class SheetUtil
     {
         int exprBegin = text.indexOf(Expression.BEGIN_EXPR);
         int exprEnd = text.indexOf(Expression.END_EXPR);
-        logger.trace("  rV: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
+        if (logger.isTraceEnabled()) logger.trace("  rV: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
 
         while (exprBegin != -1 && exprEnd != -1 && exprEnd > exprBegin)
         {
@@ -1261,7 +1261,7 @@ public class SheetUtil
             }
             exprEnd = text.indexOf(Expression.END_EXPR, exprBegin);
 
-            logger.trace("  tPEAOC: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
+            if (logger.isTraceEnabled()) logger.trace("  tPEAOC: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
         }
         return text;
     }
@@ -1296,8 +1296,8 @@ public class SheetUtil
         if (pastEndRefs == null || pastEndRefs.size() == 0)
             return;
 
-        logger.trace("takePastEndAction: {}, action {}.", block, pastEndAction);
-        logger.trace("  PastEndRefs: {}", pastEndRefs);
+        if (logger.isTraceEnabled()) logger.trace("takePastEndAction: {}, action {}.", block, pastEndAction);
+        if (logger.isTraceEnabled()) logger.trace("  PastEndRefs: {}", pastEndRefs);
 
         for (int rowNum = top; rowNum <= bottom; rowNum++)
         {
@@ -1364,7 +1364,7 @@ public class SheetUtil
                     String cellText = rts.getString();
                     int exprBegin = cellText.indexOf(Expression.BEGIN_EXPR);
                     int exprEnd = cellText.indexOf(Expression.END_EXPR);
-                    logger.trace("  tPEAOC: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
+                    if (logger.isTraceEnabled()) logger.trace("  tPEAOC: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
 
                     while (exprBegin != -1 && exprEnd != -1 && exprEnd > exprBegin)
                     {
@@ -1388,7 +1388,7 @@ public class SheetUtil
                                 // JEXL for a new, empty ArrayList.
                                 value = Expression.BEGIN_EXPR + "new('java.util.ArrayList')" + Expression.END_EXPR;
                             }
-                            logger.trace("    removing \"{}\".", remove);
+                            if (logger.isTraceEnabled()) logger.trace("    removing \"{}\".", remove);
                             rts = RichTextStringUtil.replaceAll(rts, helper, remove, value);
                             cell.setCellValue(rts);
                             cellText = rts.getString();
@@ -1401,7 +1401,7 @@ public class SheetUtil
                         }
                         exprEnd = cellText.indexOf(Expression.END_EXPR, exprBegin);
 
-                        logger.trace("  tPEAOC: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
+                        if (logger.isTraceEnabled()) logger.trace("  tPEAOC: exprBegin = {}, exprEnd = {}", exprBegin, exprEnd);
                     }
                 }
                 break;
@@ -1426,12 +1426,12 @@ public class SheetUtil
         while (m.find())
         {
             String possibleVariable = m.group();
-            logger.trace("    cPER: Found {}", possibleVariable);
+            if (logger.isTraceEnabled()) logger.trace("    cPER: Found {}", possibleVariable);
             // Pattern doesn't eliminate possible variables that start
             // with a digit.  Check here.
             if (!Character.isDigit(possibleVariable.charAt(0)) && pastEndRefs.contains(possibleVariable))
             {
-                logger.trace("    It's a past end ref!");
+                if (logger.isTraceEnabled()) logger.trace("    It's a past end ref!");
                 return true;
             }
         }
@@ -1441,12 +1441,12 @@ public class SheetUtil
         while (m.find())
         {
             String possibleVariable = m.group();
-            logger.trace("    Found {}", possibleVariable);
+            if (logger.isTraceEnabled()) logger.trace("    Found {}", possibleVariable);
             // Pattern doesn't eliminate possible variables that start
             // with a digit.  Check here.
             if (!Character.isDigit(possibleVariable.charAt(0)) && pastEndRefs.contains(possibleVariable))
             {
-                logger.trace("    It's a past end ref!");
+                if (logger.isTraceEnabled()) logger.trace("    It's a past end ref!");
                 return true;
             }
         }
@@ -1469,7 +1469,7 @@ public class SheetUtil
         int top = block.getTopRowNum();
         int bottom = block.getBottomRowNum();
         Block ancestor;
-        logger.trace("removeBlock: {}: {}.", sheet.getSheetName(), block);
+        if (logger.isTraceEnabled()) logger.trace("removeBlock: {}: {}.", sheet.getSheetName(), block);
 
         int numToShiftUp = bottom - top + 1;
         int numToShiftLeft = right - left + 1;
@@ -1479,7 +1479,7 @@ public class SheetUtil
         {
         case VERTICAL:
             // Cells will be shifted up.
-            logger.trace("  Case: Vertical");
+            if (logger.isTraceEnabled()) logger.trace("  Case: Vertical");
             // Shift up all Cells from leftmost to rightmost in Block, from just
             // below the Block all the way down to the bottom of the first Shift
             // Ending Ancestor.
@@ -1507,7 +1507,7 @@ public class SheetUtil
             break;
         case HORIZONTAL:
             // Cells will be shifted left.
-            logger.trace("  Case: Horizontal");
+            if (logger.isTraceEnabled()) logger.trace("  Case: Horizontal");
             // Shift left all Cells from the top to the bottom in Block, from just
             // to the right of the Block all the way to the far right of the first
             // Shift Ending Ancestor.
@@ -1535,7 +1535,7 @@ public class SheetUtil
                     -numToShiftLeft, 0, true, true);
             break;
         case NONE:
-            logger.trace("  Case: None");
+            if (logger.isTraceEnabled()) logger.trace("  Case: None");
             // Remove the Block content.
             deleteBlock(sheet, tagContext, block, context);
             break;
@@ -1622,7 +1622,7 @@ public class SheetUtil
 		default:
 			break;
         }
-        logger.trace("    gSEA: Ancestor of {} is {}", block, ancestor);
+        if (logger.isTraceEnabled()) logger.trace("    gSEA: Ancestor of {} is {}", block, ancestor);
         return ancestor;
     }
 
@@ -1647,8 +1647,8 @@ public class SheetUtil
         Block ancestor, prevAncestor;
         Block parent = block.getParent();
 
-        logger.trace("shiftForBlock: {}: {}, numBlocksAway={}.", sheet.getSheetName(), block, numBlocksAway);
-        logger.trace("  parent: " + parent);
+        if (logger.isTraceEnabled()) logger.trace("shiftForBlock: {}: {}, numBlocksAway={}.", sheet.getSheetName(), block, numBlocksAway);
+        if (logger.isTraceEnabled()) logger.trace("  parent: " + parent);
 
         // Below this point!
 
@@ -1667,7 +1667,7 @@ public class SheetUtil
         {
         case VERTICAL:
             // Cells will be shifted down.
-            logger.trace("  Case Vertical");
+            if (logger.isTraceEnabled()) logger.trace("  Case Vertical");
             // The number of shift operations could be as many as the number of
             // Shift Ending Ancestors + 1 (for the root parent of the Sheet).
             // Keep finding Shift Ending Ancestors (or the root) and push a new
@@ -1751,7 +1751,7 @@ public class SheetUtil
             break;
         case HORIZONTAL:
             // Cells will be shifted right.
-            logger.trace("  Case Horizontal");
+            if (logger.isTraceEnabled()) logger.trace("  Case Horizontal");
             // The number of shift operations could be as many as the number of
             // Shift Ending Ancestors + 1 (for the root parent of the Sheet).
             // Keep finding Shift Ending Ancestors (or the root) and push a new
@@ -1854,7 +1854,7 @@ public class SheetUtil
             {
                 if (!isCellImmaterial(sheet, r, c))
                 {
-                    logger.trace("      gERAB: Row {} is not empty because of cell {}", r, c);
+                    if (logger.isTraceEnabled()) logger.trace("      gERAB: Row {} is not empty because of cell {}", r, c);
                     rowEmpty = false;
                     break;
                 }
@@ -1892,7 +1892,7 @@ public class SheetUtil
                 {
                     if (!isCellImmaterial(sheet, r, c))
                     {
-                        logger.trace("      gECAR: Column {} is not empty because of row {}", c, r);
+                        if (logger.isTraceEnabled()) logger.trace("      gECAR: Column {} is not empty because of row {}", c, r);
                         colEmpty = false;
                         break;
                     }
@@ -1931,7 +1931,7 @@ public class SheetUtil
         String currSuffix = tagContext.getFormulaSuffix();
         String newSuffix = "[" + seqNbr + "," + numBlocksAway + "]";
         Map<String, String> tagLocationsMap = context.getTagLocationsMap();
-        logger.trace("copyBlock: {}: {}, numBlocksAway={}", sheet.getSheetName(), block, numBlocksAway);
+        if (logger.isTraceEnabled()) logger.trace("copyBlock: {}: {}, numBlocksAway={}", sheet.getSheetName(), block, numBlocksAway);
 
         // If copying down...
         int height = block.getBottomRowNum() - block.getTopRowNum() + 1;
@@ -1947,7 +1947,7 @@ public class SheetUtil
         switch (block.getDirection())
         {
         case VERTICAL:
-            logger.trace("  Case Vertical");
+            if (logger.isTraceEnabled()) logger.trace("  Case Vertical");
             // Copy Cells.
             logger.debug("    Copying cells {} to {}, row {} to {} by {} rows.",
                     left, right, top, bottom, translateDown);
@@ -2030,7 +2030,7 @@ public class SheetUtil
                     left, right, top, bottom, 0, translateDown, currSuffix, newSuffix);
             break;
         case HORIZONTAL:
-            logger.trace("  Case Horizontal");
+            if (logger.isTraceEnabled()) logger.trace("  Case Horizontal");
 
             // Copy Cells.
             logger.debug("    Copying cells {} to {}, row {} to {} by {} columns.",
@@ -2252,7 +2252,7 @@ public class SheetUtil
      */
     public static void groupRows(Sheet sheet, int begin, int end, boolean collapse)
     {
-        logger.trace("groupRows: {}, ({} - {}), collapse: {}",
+        if (logger.isTraceEnabled()) logger.trace("groupRows: {}, ({} - {}), collapse: {}",
                 sheet.getSheetName(), begin, end, collapse);
         sheet.groupRow(begin, end);
         if (collapse)
@@ -2288,7 +2288,7 @@ public class SheetUtil
      */
     public static void groupColumns(Sheet sheet, int begin, int end, boolean collapse)
     {
-        logger.trace("groupColumns: {}, ({} - {}), collapse: {}",
+        if (logger.isTraceEnabled()) logger.trace("groupColumns: {}, ({} - {}), collapse: {}",
                 sheet.getSheetName(), begin, end, collapse);
         // XSSFSheets will collapse the columns on "groupColumn".
         // Store the column widths to restore them after "groupColumn".
@@ -2547,7 +2547,7 @@ public class SheetUtil
     public static Font createFont(Workbook workbook, boolean fontBoldweight, boolean fontItalic, Color fontColor, String fontName, short fontHeightInPoints, byte fontUnderline,
                                   boolean fontStrikeout, int fontCharset, short fontTypeOffset)
     {
-        logger.trace("createFont: {},{},{},{},{},{},{},{},{}",
+        if (logger.isTraceEnabled()) logger.trace("createFont: {},{},{},{},{},{},{},{},{}",
                 fontBoldweight, fontItalic,
                 ((fontColor == null) ? "null" :
                         (fontColor instanceof HSSFColor) ? fontColor.toString() :
@@ -2613,7 +2613,7 @@ public class SheetUtil
      */
     public static Color getColor(Workbook workbook, String value)
     {
-        logger.trace("getColor: {}", value);
+        if (logger.isTraceEnabled()) logger.trace("getColor: {}", value);
         Color color = null;
         if (workbook instanceof HSSFWorkbook)
         {
@@ -2769,7 +2769,7 @@ public class SheetUtil
      */
     public static String safeSetSheetName(Workbook workbook, int index, String newName)
     {
-        logger.trace("sSSN({}, \"{}\")", index, newName);
+        if (logger.isTraceEnabled()) logger.trace("sSSN({}, \"{}\")", index, newName);
 
         // For the uniqueness of sheet names, they are case insensitive.
         // No change.

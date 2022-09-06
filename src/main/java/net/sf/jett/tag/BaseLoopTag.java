@@ -517,11 +517,11 @@ public abstract class BaseLoopTag extends BaseTag
                     // If it did, then all pending blocks must react!
                     if (colGrowth != 0 || rowGrowth != 0)
                     {
-                        logger.trace("  colGrowth is {}, rowGrowth is {}", colGrowth, rowGrowth);
+                        if (logger.isTraceEnabled()) logger.trace("  colGrowth is {}, rowGrowth is {}", colGrowth, rowGrowth);
                         for (int j = index + 1; j < numIterations; j++)
                         {
                             Block pendingBlock = blocksToProcess.get(j);
-                            logger.trace("    Reacting Block: {}", pendingBlock);
+                            if (logger.isTraceEnabled()) logger.trace("    Reacting Block: {}", pendingBlock);
                             pendingBlock.reactToGrowth(currBlock, colGrowth, rowGrowth);
                         }
                     }
