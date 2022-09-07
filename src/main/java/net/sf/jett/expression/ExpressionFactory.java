@@ -53,8 +53,9 @@ public class ExpressionFactory
      */
     public void setLenient(boolean lenient)
     {
-    	if (myEngine.isStrict() != lenient) {
-    		myBuilder.strict(lenient);
+    	boolean strict = !lenient;
+    	if (myEngine.isStrict() != strict) {
+    		myBuilder.strict(strict);
             myEngine = myBuilder.create();
     	}
     }
@@ -66,7 +67,7 @@ public class ExpressionFactory
      */
     public boolean isLenient()
     {
-        return myEngine.isStrict();
+        return !myEngine.isStrict();
     }
 
     /**

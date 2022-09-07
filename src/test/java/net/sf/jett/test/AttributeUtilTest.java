@@ -23,7 +23,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.jett.exception.AttributeExpressionException;
 import net.sf.jett.expression.ExpressionFactory;
 import net.sf.jett.model.Block;
 import net.sf.jett.model.WorkbookContext;
