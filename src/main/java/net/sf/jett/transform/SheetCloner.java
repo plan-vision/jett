@@ -121,7 +121,8 @@ public class SheetCloner
             ps.setNotes(mcsp.isNotes());
             ps.setPageStart(mcsp.getPageStart());
             ps.setPaperSize(mcsp.getPaperSize());
-            ps.setScale(mcsp.getScale());
+            if (mcsp.getScale() >= 10) /* fixes exception it value < 10 */
+            	ps.setScale(mcsp.getScale());
             ps.setUsePage(mcsp.isUsePage());
             ps.setValidSettings(mcsp.isValidSettings());
             ps.setVResolution(mcsp.getVResolution());

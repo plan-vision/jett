@@ -591,6 +591,11 @@ public class StyleParser
         {
             try
             {
+            	switch (value) {
+            		case "SOLID" : 
+            			value="SOLID_FOREGROUND";
+            			break;
+            	}
                 style.setFillPatternType(FillPatternType.valueOf(value));
             }
             catch (IllegalArgumentException e)
