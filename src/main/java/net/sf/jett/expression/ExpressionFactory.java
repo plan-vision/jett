@@ -1,11 +1,20 @@
 package net.sf.jett.expression;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.jexl3.JexlBuilder;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
+import org.apache.commons.jexl3.JexlOperator;
+import org.apache.commons.jexl3.internal.introspection.Uberspect;
+import org.apache.commons.jexl3.introspection.JexlPermissions;
+import org.apache.commons.jexl3.introspection.JexlUberspect.JexlResolver;
+import org.apache.commons.jexl3.introspection.JexlUberspect.PropertyResolver;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -83,6 +92,40 @@ public class ExpressionFactory
             myEngine = myBuilder.create();
     	}
     }
+
+    public void permissions(JexlPermissions permissions)
+    {
+        final List<PropertyResolver> MAP = Collections.unmodifiableList(Arrays.asList(
+		        JexlResolver.MAP,
+		        JexlResolver.LIST,
+		        JexlResolver.DUCK,
+		        JexlResolver.PROPERTY,
+		        JexlResolver.FIELD,
+		        JexlResolver.CONTAINER
+		));
+        final List<PropertyResolver> POJO = Collections.unmodifiableList(Arrays.asList(
+                JexlResolver.PROPERTY,
+                JexlResolver.MAP,
+                JexlResolver.LIST,
+                JexlResolver.DUCK,
+                JexlResolver.FIELD,
+                JexlResolver.CONTAINER
+        ));
+        Uberspect a = new Uberspect(LogFactory.getLog(ExpressionFactory.class), (op, obj) -> {
+        	  if (op == JexlOperator.ARRAY_GET) {
+                  return MAP;
+              }
+              if (op == JexlOperator.ARRAY_SET) {
+                  return MAP;
+              }
+              if (op == null && obj instanceof Map) {
+                  return MAP;
+              }
+              return POJO;
+        },permissions);
+        myBuilder.uberspect(a);
+        myEngine = myBuilder.create();
+    }    
 
     /**
      * Returns the internal <code>JexlEngine's</code> "silent" flag.

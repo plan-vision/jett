@@ -108,7 +108,7 @@ public class ExcelTransformer
     private boolean amIEvaluatingFormulas;
     private boolean amIForcingRecalculationOnOpening;
     private boolean amIChangingForcingRecalculation;
-    private ExpressionFactory myExpressionFactory;
+    public final ExpressionFactory myExpressionFactory;
 
     /**
      * Construct an <code>ExcelTransformer</code>.

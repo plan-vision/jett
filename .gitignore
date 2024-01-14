@@ -4,7 +4,7 @@ jett-db.properties
 pom.generated.xml
 jar.generated.xml
 /updates/
-./output/
+/output/
 .settings
 /h2db/
 target
