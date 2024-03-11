@@ -248,7 +248,7 @@ public enum ExcelColor
      */
     public static HSSFColor getHssfColorByIndex(short index)
     {
-        if (index == Font.COLOR_NORMAL || index == XSSF_COLOR_COMMENT)
+        if (index == Font.COLOR_NORMAL || index == XSSF_COLOR_COMMENT || index >= hssfColors.length)
         {
             return HSSF_COLOR_AUTOMATIC;
         }
