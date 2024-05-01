@@ -119,32 +119,31 @@ public class StyleParser
 
     /**
      * The property to specify horizontal alignment of the text.
-     * @see net.sf.jett.model.Alignment
      */
     public static final String PROPERTY_ALIGNMENT = "alignment";
     /**
      * The property to specify the type of all 4 borders.
-     * @see net.sf.jett.model.BorderType
+     * 
      */
     public static final String PROPERTY_BORDER = "border";
     /**
      * The property to specify the type of the bottom border.
-     * @see net.sf.jett.model.BorderType
+     * 
      */
     public static final String PROPERTY_BORDER_BOTTOM = "border-bottom";
     /**
      * The property to specify the type of the left border.
-     * @see net.sf.jett.model.BorderType
+     *
      */
     public static final String PROPERTY_BORDER_LEFT = "border-left";
     /**
      * The property to specify the type of the right border.
-     * @see net.sf.jett.model.BorderType
+     * 
      */
     public static final String PROPERTY_BORDER_RIGHT = "border-right";
     /**
      * The property to specify the type of the top border.
-     * @see net.sf.jett.model.BorderType
+     * 
      */
     public static final String PROPERTY_BORDER_TOP = "border-top";
     /**
@@ -195,7 +194,6 @@ public class StyleParser
     /**
      * The property to specify the fill pattern to be used with the fill
      * foreground color and the fill background color.
-     * @see net.sf.jett.model.FillPattern
      */
     public static final String PROPERTY_FILL_PATTERN = "fill-pattern";
     /**
@@ -222,7 +220,6 @@ public class StyleParser
     public static final String PROPERTY_ROW_HEIGHT_IN_POINTS = "row-height-in-points";
     /**
      * The property to specify the vertical alignment of the text.
-     * @see net.sf.jett.model.VerticalAlignment
      */
     public static final String PROPERTY_VERTICAL_ALIGNMENT = "vertical-alignment";
     /**
@@ -236,7 +233,6 @@ public class StyleParser
     public static final String PROPERTY_FONT_BOLDWEIGHT = "font-weight";
     /**
      * The property to specify the charset used by the font.
-     * @see net.sf.jett.model.FontCharset
      */
     public static final String PROPERTY_FONT_CHARSET = "font-charset";
     /**
@@ -268,7 +264,6 @@ public class StyleParser
     public static final String PROPERTY_FONT_TYPE_OFFSET = "font-type-offset";
     /**
      * The property to specify how the font text is underlined.
-     * @see net.sf.jett.model.FontUnderline
      */
     public static final String PROPERTY_FONT_UNDERLINE = "font-underline";
 
