@@ -59,8 +59,7 @@
                             <goal>sign</goal>
                         </goals>
                         <configuration>
-                            <gpg.keyname>822F299939AD796674BDDF6DC783FF047D2B2A5D</gpg.keyname>
-                            <gpg.passphrase>123213</gpg.passphrase>
+                            <gpg.keyname>034F4F92E3F606473072CF8E6D857A16C1818935</gpg.keyname>
                         </configuration>
                     </execution>
                 </executions>
@@ -95,6 +94,7 @@
                 <executions>
                     <execution>
                     <id>attach-javadocs</id>
+                    <phase>package</phase>
                     <goals>
                         <goal>jar</goal>
                     </goals>
