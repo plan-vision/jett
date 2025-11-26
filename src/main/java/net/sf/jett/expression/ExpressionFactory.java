@@ -15,6 +15,14 @@ import org.apache.commons.jexl3.introspection.JexlPermissions;
 import org.apache.commons.jexl3.introspection.JexlUberspect.JexlResolver;
 import org.apache.commons.jexl3.introspection.JexlUberspect.PropertyResolver;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 /**
@@ -49,7 +57,12 @@ public class ExpressionFactory
         myFuncs = new HashMap<>();
         myFuncs.put("jagg", JaggFuncs.class);
         myFuncs.put("jett", JettFuncs.class);
-        myBuilder = new JexlBuilder().strict(true).silent(false).debug(false).namespaces(myFuncs);
+
+        // Allow expressions to access workbook/sheet/row/cell
+        ClassPermissions permissions = new ClassPermissions(HSSFWorkbook.class, HSSFSheet.class, HSSFRow.class, HSSFCell.class,
+                XSSFWorkbook.class, XSSFSheet.class, XSSFRow.class, XSSFCell.class);
+
+		myBuilder = new JexlBuilder().permissions(permissions).strict(true).silent(false).debug(false).namespaces(myFuncs);
         myEngine = myBuilder.create();
         myExpressionCache = new HashMap<>();
     }
