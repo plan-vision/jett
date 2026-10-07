@@ -58,9 +58,9 @@ public class ExpressionFactory
         myFuncs.put("jagg", JaggFuncs.class);
         myFuncs.put("jett", JettFuncs.class);
 
-        // Allow expressions to access workbook/sheet/row/cell
+        // Allow expressions to access workbook/sheet/row/cell and function classes.
         ClassPermissions permissions = new ClassPermissions(HSSFWorkbook.class, HSSFSheet.class, HSSFRow.class, HSSFCell.class,
-                XSSFWorkbook.class, XSSFSheet.class, XSSFRow.class, XSSFCell.class);
+                XSSFWorkbook.class, XSSFSheet.class, XSSFRow.class, XSSFCell.class, JaggFuncs.class, JettFuncs.class);
 
 		myBuilder = new JexlBuilder().permissions(permissions).strict(true).silent(false).debug(false).namespaces(myFuncs);
         myEngine = myBuilder.create();
